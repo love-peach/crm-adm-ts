@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <el-button>按需引入 element 组件库</el-button>
     <img alt="Vue logo" src="../assets/logo.png" />
     <HelloWorld msg="Welcome to Your Vue.js App" />
   </div>
