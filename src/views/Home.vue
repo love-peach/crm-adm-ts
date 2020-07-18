@@ -18,6 +18,7 @@
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld.vue';
 import variable from '@/styles/_variables.scss';
+import { logout, login } from '@/api/login';
 
 export default {
   name: 'Home',
@@ -28,6 +29,18 @@ export default {
     variable() {
       return variable;
     },
+  },
+  mounted() {
+    logout({ name: 'zhang' });
+
+    login(
+      { name: 'zhang' },
+      {
+        headers: {
+          Authorization: 'token11',
+        },
+      },
+    );
   },
 };
 </script>
