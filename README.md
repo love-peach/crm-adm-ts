@@ -7,6 +7,7 @@
 - [x] 引入 element-ui 按需引入
 - [ ] 国际化 18n
 - [ ] axios 封装
+- [ ] mock 数据
 
 ## 格式化校验 editorconfig eslint prettier
 
@@ -187,4 +188,20 @@ import './plugins/element.ts';
     <el-button>按需引入 element 组件库</el-button>
   </div>
 </template>
+```
+
+## 问题
+
+### tsconfig 警告
+
+描述：在 tsconfig 文件，有如下警告
+
+```
+Problems loading reference ‘https://schemastore.azurewebsites.net/schemas/json/package.json’: Unable to load schema from ‘https://schemastore.azurewebsites.net/schemas/json/package.json’: Unable to connect to https://schemastore.azurewebsites.net/schemas/json/package.json. Error: read ECONNRESET
+```
+
+解决：在 settings.json 中添加，最后重启项目
+
+```
+"http.proxyAuthorization": "false"
 ```
