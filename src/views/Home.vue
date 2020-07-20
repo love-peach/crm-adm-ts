@@ -2,7 +2,6 @@
   <div class="home">
     <el-button>按需引入 element 组件库</el-button>
     <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
     <div class="variable" :style="{ color: variable.colorSucss }">全局样式变量</div>
     <div>
       <div class="left">float left</div>
@@ -10,37 +9,31 @@
       <div class="left">float left</div>
 
       <div class="clear2">clear 2</div>
+
+      <el-button @click="handleLogin">login</el-button>
+      <el-button @click="handleLogOut">logout</el-button>
     </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue';
 import variable from '@/styles/_variables.scss';
 import { logout, login } from '@/api/login';
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld,
-  },
   computed: {
     variable() {
       return variable;
     },
   },
-  mounted() {
-    logout({ name: 'zhang' });
-
-    login(
-      { name: 'zhang' },
-      {
-        headers: {
-          Authorization: 'token11',
-        },
-      },
-    );
+  methods: {
+    handleLogin() {
+      login();
+    },
+    handleLogOut() {
+      logout({ name: 'zhang' });
+    },
   },
 };
 </script>

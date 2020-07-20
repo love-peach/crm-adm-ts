@@ -4,11 +4,11 @@ import axios from 'axios';
 
 let source = axios.CancelToken.source();
 const router = import('@/router');
-
-console.log(process.env, 'process.env.BASE_API');
+// const isProduction = process.env.NODE_ENV === 'production';
+const BASE_API = process.env.VUE_APP_BASE_API;
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API,
+  baseURL: BASE_API,
   timeout: 65000,
   withCredentials: true,
   headers: {},

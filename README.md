@@ -6,14 +6,70 @@
 - [ ] 风格约定 命名 大小写等
 - [x] 引入 element-ui 按需引入
 - [x] 样式处理
-- [ ] 模板 脚本生成页面模板
 - [ ] 国际化 18n
 - [ ] axios 封装
 - [ ] mock 数据
 
+## 目录结构
+
+`tree -l 3 -f --ignore "node_modules/,dist/,.git/" --directoryFirst -a`
+
+```
+├── public/
+|  ├── favicon.ico
+|  └── index.html
+├── src/
+|  ├── api/
+|  |  └── login.ts
+|  ├── assets/
+|  |  └── logo.png
+|  ├── components/
+|  |  └── HelloWorld.vue
+|  ├── plugins/
+|  |  └── element.ts
+|  ├── router/
+|  |  └── index.ts
+|  ├── store/
+|  |  └── index.ts
+|  ├── styles/
+|  |  ├── index.scss
+|  |  ├── _layout.scss
+|  |  ├── _mixins.scss
+|  |  ├── _overwrite_element.scss
+|  |  ├── _reset.scss
+|  |  ├── _variables.scss
+|  |  └── _variables.scss.d.ts
+|  ├── utils/
+|  |  └── http.ts
+|  ├── views/
+|  |  ├── About.vue
+|  |  └── Home.vue
+|  ├── App.vue
+|  ├── main.ts
+|  ├── shims-tsx.d.ts
+|  └── shims-vue.d.ts
+├── .browserslistrc
+├── .editorconfig
+├── .env
+├── .env.development
+├── .env.production
+├── .env.test
+├── .eslintrc.js
+├── .gitignore
+├── babel.config.js
+├── package.json
+├── prettier.config.js
+├── README.md
+├── tsconfig.json
+├── vue.config.js
+├── yarn-error.log
+└── yarn.lock
+
+```
+
 ## 格式化校验
 
-### .editorconfig
+**.editorconfig**
 
 ```
 root = true
@@ -39,7 +95,7 @@ trim_trailing_whitespace = false
 indent_style = tab
 ```
 
-### eslint
+**eslint**
 
 安装依赖。`eslint-plugin-html` 安装在本地还是全局 取决于 `eslint` 的安装方式。这里，无法保证每个人都是全局安装 `eslint`，因此，这里选择将依赖安装到本地，并将依赖写入依赖文件中。
 
@@ -72,7 +128,7 @@ module.exports = {
 };
 ```
 
-### prettier
+**prettier**
 
 ```json
 {
@@ -89,7 +145,7 @@ module.exports = {
 }
 ```
 
-### vs code 参考设置
+**vs code 参考设置**
 
 ```json
 {
@@ -135,14 +191,14 @@ module.exports = {
 
 虽然，项目依赖 `element-ui` 但是，并不是每一个组件都能用上。采用按需引入方式，可以进一步减小打包体积。
 
-### 安装依赖
+**安装依赖**
 
 ```
 yarn add element-ui -S
 yarn add babel-plugin-component -D
 ```
 
-### 修改 babel
+**修改 babel**
 
 ```js
 module.exports = {
@@ -159,7 +215,7 @@ module.exports = {
 };
 ```
 
-### 添加管理文件
+**添加管理文件**
 
 添加按需引入组件入口统一管理文件 `plugins/element.ts`
 
@@ -177,14 +233,14 @@ Vue.use(Pagination);
 Vue.prototype.$message = Message;
 ```
 
-### 然后在 `src/main.ts` 中引入
+**然后在 src/main.ts 中引入**
 
 ```ts
 import 'element-ui/lib/theme-chalk/index.css';
 import './plugins/element.ts';
 ```
 
-### 在页面中就可以使用了
+**在页面中就可以使用了**
 
 ```html
 <template>
@@ -196,7 +252,7 @@ import './plugins/element.ts';
 
 ## 样式处理
 
-### 样式分类
+**样式分类**
 
 目前样式分类如下，如需添加其他模块再讨论
 
@@ -226,7 +282,7 @@ src/styles/
 import './styles/index.scss';
 ```
 
-### 厂商前缀处理 autoprefixer
+**厂商前缀处理 autoprefixer**
 
 各个浏览器对 css3 标准的支持程度不太一样，因此，各个浏览器厂商针对个别样式 提供了单独的前缀。
 
@@ -242,11 +298,11 @@ not dead
 
 我们可以从这个 [browserl.ist](https://browserl.ist/?q=%3E+1%25%2C+last+2+versions%2C+not+dead) 网站，查看浏览器覆盖率，目前上述配置覆盖率是 `89.91%`
 
-### 全局样式变量处理
+**全局样式变量处理**
 
 全局样式变量分两个部分，第一个部分，是在 `style` 中需要定义的全局颜色，大小等变量，不用每个文件引；第二个部分，是在 `js` 中，可能也用到定义的这些变量，又不想重新弄个 `xx.js` 来维护。
 
-#### style 中全局样式变量处理
+**1) style 中全局样式变量处理**
 
 首先，定义全局样式变量 `/src/styles/_variables.scss`
 
@@ -298,7 +354,7 @@ module.exports = {
 </style>
 ```
 
-#### js 中全局样式变量处理
+**2) js 中全局样式变量处理**
 
 首先，在 `/src/styles/_variables.scss` 文件中输出变量
 
@@ -352,9 +408,102 @@ export default variables;
 </style>
 ```
 
+## 请求封装 axios
+
+**安装依赖**
+
+```sh
+yarn add axios -S
+```
+
+**封装**
+
+后续再完善
+
+```js
+import qs from 'qs';
+import axios from 'axios';
+
+const service = axios.create({
+  baseURL: process.env.VUE_APP_BASE_API,
+});
+
+service.interceptors.request.use(...);
+service.interceptors.response.use(...);
+
+export default {
+  get(url: string, params?: any, options?: object) {
+    return service.get(url, { params, ...options });
+  },
+  post(url: string, data?: any, options?: object) {
+    return service.post(url, qs.parse(data), options); // TODO: data 统一 qs 处理？
+  },
+};
+```
+
+**定义 api**
+
+在 `api/`目录下添加相应页面的接口文件，如下：
+
+```ts
+import fetch from '@/utils/http';
+
+/**
+ * @desc 登出
+ */
+export const logout = (params?: any, options?: any) => fetch.get('/login', params, options);
+
+/**
+ * @desc 登陆
+ */
+export const login = (params?: any, options?: any) => fetch.post('/login', params, options);
+```
+
+**使用**
+
+```js
+import { logout, login } from '@/api/login';
+
+logout({ name: 'zhang' }).then();
+
+login(
+  { name: 'zhang' },
+  {
+    headers: {
+      Authorization: 'token11',
+    },
+  },
+).then();
+```
+
+## 区分环境
+
+在 `根目录` 下，创建相应环境的文件，如：`.env`、`.env.development`、`.env.production`、`.env.test`，内容如下
+
+```
+NODE_ENV=production
+VUE_APP_BASE_API=http://man.btr.jd.com
+VUE_APP_APP_ORIGIN=http://man.btr.jd.com
+```
+
+其中，只有 `VUE_APP_*` 才会被 `webpack.DefinePlugin` 静态嵌入到客户端侧的包中。
+
+此外，还有两个特殊变量
+
+- `NODE_ENV` - 会是 `"development"`、`"production"` 或 `"test"` 中的一个。具体的值取决于应用运行的模式。
+- `BASE_URL` - 会和 `vue.config.js` 中的 `publicPath` 选项相符，即你的应用会部署到的基础路径。
+
+详见：[环境变量和模式](https://cli.vuejs.org/zh/guide/mode-and-env.html)
+
+## 模拟数据
+
+~~mockjs~~
+
+通过代理，请求不同 url 实现 mock 与真实数据的切换。
+
 ## 问题
 
-### tsconfig 警告
+**tsconfig 警告**
 
 描述：在 tsconfig 文件，有如下警告
 
